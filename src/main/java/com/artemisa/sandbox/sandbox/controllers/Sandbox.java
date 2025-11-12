@@ -3,7 +3,9 @@ package com.artemisa.sandbox.sandbox.controllers;
 import com.artemisa.sandbox.sandbox.entities.Persona;
 import com.artemisa.sandbox.sandbox.services.PersonaService;
 import com.artemisa.sandbox.sandbox.shared.PersonaDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +32,19 @@ public class Sandbox {
     }
 
     @PostMapping("/create/persona")
-    public ResponseEntity<PersonaDTO> createPersona(@RequestBody PersonaDTO persona){
+    public ResponseEntity<PersonaDTO> createPersona(@Valid @RequestBody PersonaDTO persona){
         return personaService.crearPersona(persona);
+    }
+
+    @PostMapping("/register/persona")
+    public ResponseEntity<PersonaDTO> registerPersona(@Valid @RequestBody PersonaDTO persona){
+        return personaService.registerPerson(persona);
+    }
+
+    @GetMapping("/averageAge")
+    public ResponseEntity<Double> getAverageAge(){
+        Double result = personaService.getAverageAge();
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 
