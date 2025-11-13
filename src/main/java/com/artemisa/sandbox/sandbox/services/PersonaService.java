@@ -5,6 +5,8 @@ import com.artemisa.sandbox.sandbox.entities.Persona;
 import com.artemisa.sandbox.sandbox.repositories.PersonaRepository;
 import com.artemisa.sandbox.sandbox.shared.PersonaDTO;
 import org.hibernate.PropertyValueException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ public class PersonaService {
         this.personaRepository = personaRepository;
     }
 
+    //Borra toda la cache relacionada con personas
+    @CacheEvict(value = "persona", allEntries = true)
     public ResponseEntity<PersonaDTO> crearPersona(PersonaDTO personaDTO){
         Persona newPersona = new Persona();
         newPersona.setNombre(personaDTO.getNombre());
@@ -78,6 +82,15 @@ public class PersonaService {
                 .mapToInt(Persona::getEdad)
                 .average()
                 .orElseThrow(() -> new NoDataException("Algo fallo al calcular el promedio"));
+    }
+
+    @Cacheable("persona")
+    public PersonaDTO getPersonaByName(String name){
+        Persona persona = personaRepository.findByNombre(name).orElse(null);
+        Persona checkPersona = buscarPersona(name);
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.generateDTO(persona);
+        return personaDTO;
     }
 
 }

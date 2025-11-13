@@ -47,5 +47,11 @@ public class Sandbox {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    @GetMapping("/buscar/{name}")
+    public ResponseEntity<PersonaDTO> getPersonaByNombre(@PathVariable String name){
+        PersonaDTO result = personaService.getPersonaByName(name);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
 
 }

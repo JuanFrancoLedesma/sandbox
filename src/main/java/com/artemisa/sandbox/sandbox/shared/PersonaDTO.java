@@ -17,7 +17,13 @@ public class PersonaDTO {
     @NotNull(message = "Debe enviar la edad")
     private Integer edad;
 
+    public PersonaDTO() {}
+
     public void generateDTO(Persona persona){
+        if(persona == null){
+            return;
+        }
+
         this.id = persona.getId();
         this.nombre = persona.getNombre();
         this.edad = persona.getEdad();
