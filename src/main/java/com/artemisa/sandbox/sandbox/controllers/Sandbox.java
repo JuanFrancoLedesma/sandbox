@@ -1,6 +1,7 @@
 package com.artemisa.sandbox.sandbox.controllers;
 
 import com.artemisa.sandbox.sandbox.entities.Persona;
+import com.artemisa.sandbox.sandbox.services.AwsService;
 import com.artemisa.sandbox.sandbox.services.PersonaService;
 import com.artemisa.sandbox.sandbox.shared.PersonaDTO;
 import jakarta.validation.Valid;
@@ -15,6 +16,8 @@ public class Sandbox {
 
     @Autowired
     private PersonaService personaService;
+    @Autowired
+    private AwsService awsService;
 
     @GetMapping("/hello")
     public String sayHello(){
@@ -51,6 +54,12 @@ public class Sandbox {
     public ResponseEntity<PersonaDTO> getPersonaByNombre(@PathVariable String name){
         PersonaDTO result = personaService.getPersonaByName(name);
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PostMapping("/enviar/sqs")
+    public ResponseEntity<String> postSendMessageSQS(@RequestBody String body){
+        awsService.enviarMensaje(body);
+        return ResponseEntity.status(HttpStatus.OK).body("Mensaje enviado");
     }
 
 
