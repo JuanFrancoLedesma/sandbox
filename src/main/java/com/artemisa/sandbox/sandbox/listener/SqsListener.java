@@ -17,7 +17,7 @@ public class SqsListener {
         this.sqsClient = sqsClient;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         System.out.println("INICIANDO CONEXION CON AWS SQS");
         Executors.newSingleThreadExecutor().submit(() -> {
