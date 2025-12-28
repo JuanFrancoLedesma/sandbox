@@ -1,6 +1,6 @@
 package com.artemisa.sandbox.sandbox.enums;
 
-public enum PaymentStatus {
+public enum PaymentResultStatus {
     PENDING,
     APPROVED,
     REJECTED

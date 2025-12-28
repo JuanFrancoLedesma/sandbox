@@ -2,7 +2,7 @@ package com.artemisa.sandbox.sandbox.entities;
 
 import com.artemisa.sandbox.sandbox.enums.OrderStatus;
 import com.artemisa.sandbox.sandbox.enums.PaymentMethod;
-import com.artemisa.sandbox.sandbox.enums.PaymentStatus;
+import com.artemisa.sandbox.sandbox.enums.PaymentResultStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,7 +31,7 @@ public class Payment {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private PaymentStatus status;
+    private PaymentResultStatus status;
 
     @Column(nullable = false)
     private Long amount;
